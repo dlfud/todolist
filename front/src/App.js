@@ -9,6 +9,7 @@ function App() {
 
   useEffect(() => {
     /**API 호출 코드*/
+    // 비동기와 동기를 알아보자.
     const getData = async () => {
       const todos = await axios({
         url: "http://localhost:8083/todos",
@@ -25,7 +26,7 @@ function App() {
   return (
     <div className="max-w-4xl mx-auto mt-4">
       <TodoInput todos={todos} setTodos={setTodos} nextId={nextId} />
-      <TodoList todos={todos} />
+      <TodoList todos={todos} setTodos={setTodos} />
     </div>
   );
 }

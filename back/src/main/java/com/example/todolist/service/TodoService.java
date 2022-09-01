@@ -2,10 +2,15 @@ package com.example.todolist.service;
 
 import com.example.todolist.dao.TodoRepository;
 import com.example.todolist.domain.Todo;
+import com.example.todolist.dto.ResponseDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,5 +27,40 @@ public class TodoService {
 
     public List<Todo> getTodos(){
         return todoRepository.findAll();
+    }
+
+    public void deleteTodo(Integer id, HttpServletResponse response) throws IOException {
+        Optional<Todo> todo = todoRepository.findById(id);
+        if (todo.isPresent()) {
+            todoRepository.deleteById(id);
+        } else {
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setCode("F-1");
+            responseDTO.setMessage("이미 삭제된 할 일입니다.");
+            response.setStatus(404);
+            response.setHeader("content-type", "application/json;charset=utf-8");
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(response.getOutputStream(), responseDTO);
+
+        }
+    }
+
+    public void checkTodo(Integer id, HttpServletResponse response) throws IOException {
+        Optional<Todo> todo = todoRepository.findById(id);
+        if(todo.isPresent()) {
+            Todo targetTodo = todo.get();
+            targetTodo.setChecked(!targetTodo.getChecked());
+            todoRepository.save(targetTodo);
+        } else {
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setCode("F-2");
+            responseDTO.setMessage("없는 할 일 입니다.");
+            response.setStatus(404);
+            response.setHeader("content-type", "application/json;charset=utf-8");
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(response.getOutputStream(), responseDTO);
+        }
+
+
     }
 }
