@@ -7,7 +7,14 @@ import {
 } from "react-icons/md";
 import axios from "axios";
 
-const TodoListItem = ({ todo, setTodos, index }) => {
+const TodoListItem = ({
+  todo,
+  setTodos,
+  index,
+  setActive,
+  setSelectedTodo,
+  setContent,
+}) => {
   const { id, content, checked } = todo;
   return (
     <tr>
@@ -32,20 +39,17 @@ const TodoListItem = ({ todo, setTodos, index }) => {
         </div>
       </td>
       <td className="edit">
-        <div>
-          <label for="my-modal-5" class="modal-button"><MdModeEditOutline /></label>
-          <input type="checkbox" id="my-modal-5" class="modal-toggle" />
-          <div class="modal">
-            <div class="modal-box w-11/12 max-w-5xl">
-              <h3 class="font-bold text-lg">수정할 내용을 입력하세요</h3>
-              <input type="text"/>
-              <div class="modal-action">
-                <label for="my-modal-5" class="btn">Yay!</label>
-              </div>
-            </div>
-          </div>
-          
-        </div>
+        <label
+          htmlFor="my-modal-5"
+          className="modal-button cursor-pointer"
+          onClick={() => {
+            setSelectedTodo(todo);
+            setContent(content);
+            setActive(true);
+          }}
+        >
+          <MdModeEditOutline />
+        </label>
       </td>
       <td className="remove">
         <div
