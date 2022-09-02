@@ -63,4 +63,21 @@ public class TodoService {
 
 
     }
+
+    public void editTodoById(Integer id, Object content, HttpServletResponse response )throws IOException {
+        Optional<Todo> targetTodo = todoRepository.findById(id);
+        if(targetTodo.isPresent()){
+            Todo todo = targetTodo.get();
+            todo.setContent((String)content);
+            todoRepository.save(todo);
+        }else{
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setCode("F-3");
+            responseDTO.setMessage("없는 할일 입니다.");
+            response.setStatus(404);
+            response.setHeader("content-type", "application/json/;charset=utf-8");
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(response.getOutputStream(), responseDTO);
+        }
+    }
 }

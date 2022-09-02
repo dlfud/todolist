@@ -9,10 +9,10 @@ CREATE TABLE todo(
 );
 
 INSERT INTO todo SET
-content = "토하기";
-
-INSERT INTO todo SET
 content = "학원가서 낮잠자기";
 
 INSERT INTO todo SET
-content = "소망님께 9월 상납금 내기";
+content = "소망님께 9월 상납금 내기",
+checked=0;
+
+SELECT * FROM todo;

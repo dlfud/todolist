@@ -33,7 +33,18 @@ const TodoListItem = ({ todo, setTodos, index }) => {
       </td>
       <td className="edit">
         <div>
-          <MdModeEditOutline />
+          <label for="my-modal-5" class="modal-button"><MdModeEditOutline /></label>
+          <input type="checkbox" id="my-modal-5" class="modal-toggle" />
+          <div class="modal">
+            <div class="modal-box w-11/12 max-w-5xl">
+              <h3 class="font-bold text-lg">수정할 내용을 입력하세요</h3>
+              <input type="text"/>
+              <div class="modal-action">
+                <label for="my-modal-5" class="btn">Yay!</label>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </td>
       <td className="remove">
